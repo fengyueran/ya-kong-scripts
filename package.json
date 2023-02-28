@@ -1,0 +1,29 @@
+{
+  "name": "@cc/report-maker",
+  "version": "1.0.0",
+  "description": "The lib to make report",
+  "main": "lib",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "dev": "ts-node --project ./tsconfig.json example/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "yarn build"
+  },
+  "author": "xhm",
+  "license": "ISC",
+  "dependencies": {
+    "@react-pdf/renderer": "^3.1.6",
+    "pdf-lib": "^1.17.1",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "eslint": "^8.26.0",
+    "typescript": "^4.8.4"
+  }
+}
