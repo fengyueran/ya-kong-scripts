@@ -3,7 +3,6 @@
     "target": "es2016",
     "module": "commonjs",
     "skipLibCheck": true,
-    "declaration": true,
     "esModuleInterop": true
   },
   "files": ["common.d.ts"],
