@@ -8,13 +8,14 @@
   ],
   "scripts": {
     "dev": "ts-node --project ./tsconfig.json example/index.ts",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "rm -rf lib && tsc -p tsconfig.build.json && cp -r src/assets lib",
     "prepublishOnly": "yarn build"
   },
   "author": "xhm",
   "license": "ISC",
   "dependencies": {
-    "@react-pdf/renderer": "^3.1.6",
+    "@cc/pdf-generator": "^2.1.0",
+    "fs-extra": "^11.1.0",
     "pdf-lib": "^1.17.1",
     "react": "^18.2.0"
   },
