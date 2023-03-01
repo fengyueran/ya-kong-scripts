@@ -4,8 +4,14 @@ import { PDFDocument } from 'pdf-lib';
 
 import { makeReportByTemplate } from './make-report-by-template';
 
-export const isPDF = (path: string) => path.endsWith('.pdf');
-export const isReportInfo = (path: string) => path.endsWith('_pdf_data.json');
+interface PatientInfo {
+  patientName?: string;
+  patientId?: string;
+  ctNumber?: string;
+}
+
+const isPDF = (path: string) => path.endsWith('.pdf');
+const isReportInfo = (path: string) => path.endsWith('_pdf_data.json');
 
 const mergePDF = async (basePDF: ArrayBuffer, ffrPDF: ArrayBuffer) => {
   const ffrPDFDoc = await PDFDocument.load(ffrPDF);
@@ -57,9 +63,14 @@ const makeReportInfo = async (ffrDir: string, lingxiDir: string) => {
   return ffrReportInfo;
 };
 
-const makeFFRReport = async (ffrDir: string, lingxiDir: string) => {
+const makeFFRReport = async (
+  ffrDir: string,
+  lingxiDir: string,
+  patientInfo: PatientInfo
+) => {
   const reportInfo = await makeReportInfo(ffrDir, lingxiDir);
-  const report = await makeReportByTemplate(reportInfo, async (key) => {
+  const mergedInfo = { ...reportInfo, ...patientInfo };
+  const report = await makeReportByTemplate(mergedInfo, async (key) => {
     const data = await fs.readFile(path.join(ffrDir, key));
     return new Uint8Array(data);
   });
@@ -77,9 +88,10 @@ const readLingxiReport = async (lingxiDir: string) => {
 export const makeReport = async (
   ffrDir: string,
   lingxiDir: string,
-  outputPDFPath: string
+  outputPDFPath: string,
+  patientInfo: PatientInfo
 ) => {
-  const ffrPDFBuffer = await makeFFRReport(ffrDir, lingxiDir);
+  const ffrPDFBuffer = await makeFFRReport(ffrDir, lingxiDir, patientInfo);
   const basePDFBuffer = await readLingxiReport(lingxiDir);
   const jointed = await mergePDF(basePDFBuffer, ffrPDFBuffer);
   await fs.writeFile(outputPDFPath, jointed);
