@@ -11,6 +11,7 @@ interface PatientInfo {
 }
 
 const isPDF = (path: string) => path.endsWith('.pdf');
+const isLingXiPDF = (path: string) => path.endsWith('_combine.pdf');
 const isReportInfo = (path: string) => path.endsWith('_pdf_data.json');
 
 const mergePDF = async (basePDF: ArrayBuffer, ffrPDF: ArrayBuffer) => {
@@ -84,9 +85,12 @@ const makeFFRReport = async (
   return report;
 };
 
-const readLingxiReport = async (lingxiDir: string) => {
+const readLingXiReport = async (lingxiDir: string) => {
   const files = await fs.readdir(lingxiDir);
-  const pdfFileName = files.find((f) => isPDF(f));
+  let pdfFileName = files.find((f) => isLingXiPDF(f));
+  if (!pdfFileName) {
+    pdfFileName = files.find((f) => isPDF(f));
+  }
   const pdfFile = path.join(lingxiDir, pdfFileName);
   const pdfBuffer = await fs.readFile(pdfFile);
   return pdfBuffer;
@@ -98,7 +102,7 @@ export const makeReport = async (
   outputPDFPath: string,
   patientInfo: PatientInfo
 ) => {
-  const basePDFBuffer = await readLingxiReport(lingxiDir);
+  const basePDFBuffer = await readLingXiReport(lingxiDir);
   const basePDFDoc = await PDFDocument.load(basePDFBuffer);
   const pageCount = basePDFDoc.getPageCount();
 
