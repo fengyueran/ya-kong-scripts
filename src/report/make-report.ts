@@ -60,6 +60,7 @@ const makeReportInfo = async (ffrDir: string, lingxiDir: string) => {
     };
   });
   ffrReportInfo.assessmentInfos = lingxiReportInfo;
+  ffrReportInfo.sphereImg = 'sphere.png';
   return ffrReportInfo;
 };
 

@@ -64,6 +64,7 @@ export interface ReportInfo {
   ctNumber?: string;
   qrCode?: string;
   assessmentInfos: AssessmentType[];
+  sphereImg: string;
 }
 
 const SourceHanSansSCNormal = path.resolve(
@@ -95,6 +96,13 @@ export const makeReportByTemplate = async (
     });
 
   await Promise.all(promises);
+
+  try {
+    const sphereImg = await getImageData(reportInfo.sphereImg);
+    report.addImage(reportInfo.sphereImg, sphereImg);
+  } catch (error) {
+    console.warn('There is no sphere');
+  }
 
   const pdf = await report.toPDF();
   const pdfStream = await pdf.toBuffer();
