@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import { PDFDocument } from 'pdf-lib';
 
-import { makeReportByTemplate } from './make-report-by-template';
+import { makeReportByTemplate, ReportInfo } from './make-report-by-template';
 
 interface PatientInfo {
   patientName?: string;
@@ -67,10 +67,16 @@ const makeReportInfo = async (ffrDir: string, lingxiDir: string) => {
 const makeFFRReport = async (
   ffrDir: string,
   lingxiDir: string,
+  lingxiReportPageCount: number,
   patientInfo: PatientInfo
 ) => {
   const reportInfo = await makeReportInfo(ffrDir, lingxiDir);
-  const mergedInfo = { ...reportInfo, ...patientInfo };
+  const mergedInfo: ReportInfo = {
+    ...reportInfo,
+    ...patientInfo,
+    startPage: lingxiReportPageCount,
+  };
+
   const report = await makeReportByTemplate(mergedInfo, async (key) => {
     const data = await fs.readFile(path.join(ffrDir, key));
     return new Uint8Array(data);
@@ -92,8 +98,17 @@ export const makeReport = async (
   outputPDFPath: string,
   patientInfo: PatientInfo
 ) => {
-  const ffrPDFBuffer = await makeFFRReport(ffrDir, lingxiDir, patientInfo);
   const basePDFBuffer = await readLingxiReport(lingxiDir);
+  const basePDFDoc = await PDFDocument.load(basePDFBuffer);
+  const pageCount = basePDFDoc.getPageCount();
+
+  const ffrPDFBuffer = await makeFFRReport(
+    ffrDir,
+    lingxiDir,
+    pageCount,
+    patientInfo
+  );
+
   const jointed = await mergePDF(basePDFBuffer, ffrPDFBuffer);
   await fs.writeFile(outputPDFPath, jointed);
 };

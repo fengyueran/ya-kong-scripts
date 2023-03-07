@@ -65,6 +65,7 @@ export interface ReportInfo {
   qrCode?: string;
   assessmentInfos: AssessmentType[];
   sphereImg: string;
+  startPage: number;
 }
 
 const SourceHanSansSCNormal = path.resolve(
