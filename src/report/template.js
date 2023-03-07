@@ -120,7 +120,7 @@ const styles = renderer_1.StyleSheet.create({
     },
     // 报告加粗显示区域
     logs: {
-        marginTop: 142,
+        marginTop: 20,
         fontSize: 10,
         color: '#8C8C8C',
         textAlign: 'left',
@@ -161,7 +161,7 @@ const styles = renderer_1.StyleSheet.create({
     },
     // 图片区域
     images: {
-        marginTop: 31,
+        marginTop: 20,
         fontSize: 10,
         color: '#4F94D8',
         textAlign: 'left',
@@ -220,11 +220,11 @@ const styles = renderer_1.StyleSheet.create({
     // 页码
     pageNum: {
         position: 'absolute',
-        top: 730,
+        top: 732,
         right: 15,
-        fontSize: 9,
-        color: '#8C8C8C',
-        lineHeight: '13px',
+        fontSize: 10,
+        fontWeight: 400,
+        color: '#000000',
     },
     //签名
     signatureGroup: {
@@ -623,6 +623,17 @@ const getImage = (resource, branch) => {
         rightURL,
     };
 };
+const getSphereImg = (resource, sphereImgName) => {
+    let sphereImgUrl = '';
+    const sphereImg = resource.find((d) => d.name === sphereImgName);
+    if (sphereImg) {
+        sphereImgUrl = buffer2PngDataURL(sphereImg.data);
+    }
+    else {
+        console.warn('cannot find sphere image', sphereImgName);
+    }
+    return sphereImgUrl;
+};
 const attrNames = ['linearGradient', 'radialGradient'];
 const HackCanvas = (props) => {
     const canvasRef = (0, react_1.useRef)();
@@ -686,26 +697,22 @@ const Header = ({ title }) => {
             react_1.default.createElement(renderer_1.Image, { style: { width: 15 }, src: heart_png_1.default }),
             react_1.default.createElement(renderer_1.Text, { style: { color: '#50A4DA' } }, "\u5FC3\u810F\u5065\u5EB7\u7CBE\u51C6\u68C0\u6D4B\u4E0E\u98CE\u9669\u8BC4\u4F30\u62A5\u544A"))));
 };
-const PatientInfo = ({ info }) => {
-    return (react_1.default.createElement(renderer_1.View, { style: styles.details },
-        react_1.default.createElement(renderer_1.Text, { style: styles.detailTitle }, "\u59D3\u540D"),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailMessage, { left: 42 }] }, info.patientName),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailTitle, { left: 240 }] }, "\u75C5\u4EBA\u7F16\u53F7"),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailMessage, { left: 311 }] }, info.patientId),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailTitle, { top: 21 }] }, "\u6027\u522B"),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailMessage, { left: 42, top: 21 }] }, info.gender),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailTitle, { left: 240, top: 21 }] }, "CT\u68C0\u67E5\u65E5\u671F"),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailMessage, { left: 311, top: 21 }] }, info.checkDate),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailTitle, { top: 42 }] }, "\u5E74\u9F84"),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailMessage, { left: 42, top: 42 }] }, info.age),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailTitle, { left: 240, top: 42 }] }, "\u68C0\u67E5\u53F7"),
-        react_1.default.createElement(renderer_1.Text, { style: [styles.detailMessage, { left: 311, top: 42 }] }, info.ctNumber)));
+const SphericalImg = ({ detailsLength, resource, sphereImgName }) => {
+    if (!sphereImgName)
+        return react_1.default.createElement(renderer_1.View, { style: { marginBottom: detailsLength > 6 ? 280 : 0, height: 180 } });
+    const sphereImgUrl = getSphereImg(resource, sphereImgName);
+    return (react_1.default.createElement(renderer_1.View, { style: { marginBottom: detailsLength > 6 ? 280 : 0, height: 180 } },
+        sphereImgUrl && (react_1.default.createElement(renderer_1.Text, { style: {
+                color: '#4F94D8',
+                fontFamily: mediumFont,
+                fontSize: 10,
+                marginTop: 20,
+                marginBottom: 10,
+            } }, "\u7403\u9762\u5C55\u5F00\u56FE")),
+        sphereImgUrl && react_1.default.createElement(renderer_1.Image, { src: sphereImgUrl })));
 };
 const AssessmentForm = ({ data, maxDegreeLength, detailsLength }) => {
-    return (react_1.default.createElement(renderer_1.View, { style: [
-            styles.logs,
-            { marginTop: `${detailsLength >= 7 ? (detailsLength >= 8 ? 112 : 127) : 139}` },
-        ] },
+    return (react_1.default.createElement(renderer_1.View, { style: [styles.logs] },
         react_1.default.createElement(renderer_1.Text, { style: { color: '#4F94D8' } },
             react_1.default.createElement(renderer_1.Text, { style: { fontFamily: mediumFont } }, "DVFFR\u8BC4\u4F30\u6982\u8FF0"),
             react_1.default.createElement(renderer_1.Text, null, "\uFF08 DVFFR \u2264 0.80\u7684\u75C5\u53D8\u53EF\u80FD\u8BF1\u53D1\u5FC3\u808C\u7F3A\u8840 \uFF09")),
@@ -755,12 +762,7 @@ const AssessmentForm = ({ data, maxDegreeLength, detailsLength }) => {
         })));
 };
 const AssessmentPic = ({ data, detailsLength, resource }) => {
-    return (react_1.default.createElement(renderer_1.View, { style: [
-            styles.images,
-            {
-                marginTop: `${detailsLength >= 6 ? 48 - (count - 6) * 8 : 133 - (count - 1) * 24}`,
-            },
-        ] },
+    return (react_1.default.createElement(renderer_1.View, { style: [styles.images] },
         react_1.default.createElement(renderer_1.Text, { style: { fontFamily: mediumFont } }, "\u5404\u4E3B\u8981\u51A0\u72B6\u52A8\u8109\u53CA\u5176\u75C5\u53D8\u8840\u7BA1\u5206\u652F\u7684DVFFR\u8BC4\u4F30\u60C5\u51B5\u5982\u4E0B\uFF1A"),
         data.branches.map((item, key) => {
             // 当偶数项时图片距上面的位置与奇数项不同
@@ -797,7 +799,7 @@ const Footer = (isShowDisclaimer) => {
         react_1.default.createElement(renderer_1.Text, null, "\u672C\u62A5\u544A\u5206\u6790\u7ED3\u679C\u4E0D\u4EE3\u8868\u4E34\u5E8A\u6700\u7EC8\u51B3\u7B56\uFF0C\u4EC5\u4F9B\u4E13\u4E1A\u533B\u5E08\u53C2\u8003"))) : (react_1.default.createElement(renderer_1.View, null))));
 };
 const Remark = ({ remark, length }) => {
-    return (react_1.default.createElement(react_1.default.Fragment, null, remark === '' ? (react_1.default.createElement(renderer_1.View, null)) : (react_1.default.createElement(renderer_1.View, { style: { marginTop: `${length % 2 === 0 ? 56 : 64}`, width: '100%' } },
+    return (react_1.default.createElement(react_1.default.Fragment, null, remark === '' ? (react_1.default.createElement(renderer_1.View, null)) : (react_1.default.createElement(renderer_1.View, { style: { marginTop: `${length % 2 === 0 ? 64 : 72}`, width: '100%' } },
         react_1.default.createElement(renderer_1.Text, { style: {
                 fontSize: 10,
                 color: '#4F94D8',
@@ -807,10 +809,9 @@ const Remark = ({ remark, length }) => {
             } }, "\u5907\u6CE8\uFF1A"),
         react_1.default.createElement(renderer_1.Text, { style: { fontSize: 10, color: '#595959' } }, remark)))));
 };
-const FooterPageNum = () => {
-    return (react_1.default.createElement(renderer_1.Text, { fixed: true, style: styles.pageNum, render: ({ pageNumber, totalPages }) => (react_1.default.createElement(renderer_1.View, null,
-            react_1.default.createElement(renderer_1.Text, { style: { color: '#595959' } }, `${pageNumber}`),
-            react_1.default.createElement(renderer_1.Text, null, ` / ${totalPages}`))) }));
+const FooterPageNum = ({ startPage }) => {
+    return (react_1.default.createElement(renderer_1.Text, { fixed: true, style: styles.pageNum, render: ({ pageNumber }) => (react_1.default.createElement(renderer_1.View, null,
+            react_1.default.createElement(renderer_1.Text, { style: { color: '#595959' } }, `${pageNumber + startPage - 1}`))) }));
 };
 const SignatureLeft = () => {
     return (react_1.default.createElement(renderer_1.Text, { fixed: true, style: styles.signatureGroup, render: ({ pageNumber, totalPages }) => (react_1.default.createElement(renderer_1.View, null, pageNumber === totalPages - 1 && react_1.default.createElement(renderer_1.Text, null, " \u62A5\u544A\u533B\u751F\uFF1A"))) }));
@@ -929,17 +930,7 @@ const DiseaseWord = ({ zh, en, logo }) => {
 };
 const ZhDocument = ({ data, resource, maxDegreeLength, detailsLength }) => {
     var _a, _b;
-    const { patientId, checkDate, patientName, gender, age, hospital, reportDate, ctNumber, assessmentInfos, } = data;
-    const patientInfo = {
-        patientId,
-        checkDate,
-        patientName,
-        gender,
-        age,
-        hospital,
-        reportDate,
-        ctNumber,
-    };
+    const { startPage, assessmentInfos } = data;
     const assessmentProject = ['狭窄程度', '钙化程度', '冠周脂肪', 'DVFFR', '高危因素'];
     const formatAssessmentInfo = (assessmentInfos) => {
         if (!assessmentInfos || JSON.stringify(assessmentInfos) === '{}')
@@ -996,7 +987,7 @@ const ZhDocument = ({ data, resource, maxDegreeLength, detailsLength }) => {
             '膳食钠盐摄入量和高血压，心血管病死',
             '亡及疾病负担相关联。减少烹调用盐，',
             '选购含盐量低的食物，尽量少食或避免',
-            '高盐食物',
+            '高盐食物。',
         ],
         [
             '饮酒量与高血压、心房颤动及出血性卒',
@@ -1018,24 +1009,18 @@ const ZhDocument = ({ data, resource, maxDegreeLength, detailsLength }) => {
                 react_1.default.createElement(WhatIsFFR, null),
                 react_1.default.createElement(DVFFR, null),
                 react_1.default.createElement(ClinicalSignificance, null),
-                react_1.default.createElement(FooterPageNum, null))),
+                react_1.default.createElement(FooterPageNum, { startPage: startPage }))),
         react_1.default.createElement(renderer_1.Page, { size: "A4", style: styles.page },
             react_1.default.createElement(renderer_1.View, { style: styles.container },
                 react_1.default.createElement(Header, { reportId: data.reportId, reportDate: data.reportDate }),
-                react_1.default.createElement(PatientInfo, { info: patientInfo }),
                 react_1.default.createElement(AssessmentForm, { resource: resource, data: data, maxDegreeLength: maxDegreeLength, detailsLength: detailsLength }),
+                react_1.default.createElement(SphericalImg, { detailsLength: detailsLength, resource: resource, sphereImgName: data === null || data === void 0 ? void 0 : data.sphereImg }),
                 react_1.default.createElement(AssessmentPic, { resource: resource, data: data, maxDegreeLength: maxDegreeLength, detailsLength: detailsLength }),
                 react_1.default.createElement(Remark, { remark: data.remark, length: data.branches.length }),
                 react_1.default.createElement(Footer, { isShowDisclaimer: data.isShowDisclaimer }),
-                react_1.default.createElement(FooterPageNum, null),
+                react_1.default.createElement(FooterPageNum, { startPage: startPage }),
                 react_1.default.createElement(SignatureLeft, null),
                 react_1.default.createElement(SignatureRight, null))),
-        react_1.default.createElement(renderer_1.Page, { size: "A4", style: styles.page },
-            react_1.default.createElement(renderer_1.View, { style: [styles.container, { paddingLeft: 13 }] },
-                react_1.default.createElement(Header, { reportId: data.reportId, reportDate: data.reportDate }),
-                react_1.default.createElement(ScoreDesc, null),
-                react_1.default.createElement(Measurement, null),
-                react_1.default.createElement(FooterPageNum, null))),
         (assessmentValue === null || assessmentValue === void 0 ? void 0 : assessmentValue.length) > 0 && (react_1.default.createElement(renderer_1.Page, { size: "A4", style: styles.page },
             react_1.default.createElement(renderer_1.View, { style: [styles.container] },
                 react_1.default.createElement(Header, { title: { zh: '总体评估报告', en: 'Assessment Report' } }),
@@ -1072,7 +1057,7 @@ const ZhDocument = ({ data, resource, maxDegreeLength, detailsLength }) => {
                                         react_1.default.createElement(renderer_1.Text, null, item)));
                                 }))))));
                 }),
-                react_1.default.createElement(FooterPageNum, null)))),
+                react_1.default.createElement(FooterPageNum, { startPage: startPage })))),
         react_1.default.createElement(renderer_1.Page, { size: "A4", style: styles.page },
             react_1.default.createElement(renderer_1.View, { style: [styles.container] },
                 react_1.default.createElement(Header, { title: { zh: '心脏病预防', en: 'Prevention of Cardiovascular Disease' } }),
@@ -1116,7 +1101,8 @@ const ZhDocument = ({ data, resource, maxDegreeLength, detailsLength }) => {
                                     fontFamily: mediumFont,
                                 } }, "ENHANCE PHYSICAL ACTIVITY"),
                             react_1.default.createElement(renderer_1.Image, { src: logo7_png_1.default, style: { width: 50, height: 50, left: 16, top: 10 } }),
-                            react_1.default.createElement(renderer_1.View, { style: [styles.detailFontSize, { width: 410, left: 98, top: -36 }] }, HeartCardInfo[6].map((item, i) => (react_1.default.createElement(renderer_1.Text, { style: styles.pd, key: i }, item)))))))))));
+                            react_1.default.createElement(renderer_1.View, { style: [styles.detailFontSize, { width: 410, left: 98, top: -36 }] }, HeartCardInfo[6].map((item, i) => (react_1.default.createElement(renderer_1.Text, { style: styles.pd, key: i }, item))))))),
+                react_1.default.createElement(FooterPageNum, { startPage: startPage })))));
 };
 const document = (data, resource, userOptions = {}) => {
     const options = Object.assign({ language: 'zh' }, userOptions);
