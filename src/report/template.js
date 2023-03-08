@@ -624,7 +624,7 @@ const getImage = (resource, branch) => {
     };
 };
 const getSphereImg = (resource, sphereImgName) => {
-    let sphereImgUrl = '';
+    let sphereImgUrl;
     const sphereImg = resource.find((d) => d.name === sphereImgName);
     if (sphereImg) {
         sphereImgUrl = buffer2PngDataURL(sphereImg.data);
