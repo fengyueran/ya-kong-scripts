@@ -938,13 +938,13 @@ const ZhDocument = ({ data, resource, maxDegreeLength, detailsLength }) => {
         const values = [];
         const standard = [];
         const infos = Object.entries(assessmentInfos);
-        infos.forEach((info) => {
+        infos.forEach((info, i) => {
             const valueTmp = {};
             const standardTemp = {};
             const items = Object.entries(info[1]);
             items.forEach((item) => {
                 valueTmp[item[0]] = item[1].value;
-                valueTmp['vessel'] = infos[0][0];
+                valueTmp['vessel'] = infos[i][0];
                 standardTemp[item[0]] = item[1].standard;
             });
             values.push(valueTmp);
