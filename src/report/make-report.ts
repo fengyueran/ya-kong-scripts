@@ -39,7 +39,7 @@ const readReportInfo = async (dir: string) => {
 };
 
 const makeReportInfo = async (ffrDir: string, lingxiDir: string) => {
-  const STANDARD = '>0.7';
+  const STANDARD = '>0.8';
   const ffrReportInfo = await readReportInfo(ffrDir);
 
   const getFFRValue = (branchName: string) => {
