@@ -960,7 +960,7 @@ const ZhDocument = ({ data, resource, maxDegreeLength, detailsLength }) => {
         item.vessel,
         item.stenosisDegree,
         item.calcificationDegree,
-        item.fai.replace(/[0-9]\d*.[0-9]\d*/, (str) => Number(str.trim()).toFixed(1)),
+        item.fai,
         item.dvffr,
         item.characteristics,
     ]);
