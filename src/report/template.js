@@ -797,7 +797,7 @@ const AssessmentPic = ({ data, detailsLength, resource }) => {
                     react_1.default.createElement(ColorBar, null))));
         })));
 };
-const Footer = (isShowDisclaimer) => {
+const Footer = ({ isShowDisclaimer }) => {
     return (react_1.default.createElement(react_1.default.Fragment, null, isShowDisclaimer ? (react_1.default.createElement(renderer_1.View, { style: styles.footer, fixed: true },
         react_1.default.createElement(renderer_1.Text, null, "\u672C\u62A5\u544A\u5206\u6790\u7ED3\u679C\u4E0D\u4EE3\u8868\u4E34\u5E8A\u6700\u7EC8\u51B3\u7B56\uFF0C\u4EC5\u4F9B\u4E13\u4E1A\u533B\u5E08\u53C2\u8003"))) : (react_1.default.createElement(renderer_1.View, null))));
 };
@@ -1173,7 +1173,7 @@ var Vessel;
 exports.vesselNameMap = {
     [Vessel.LAD]: '左前降支',
     [Vessel.LCX]: '左回旋支',
-    [Vessel.RCA]: '右冠脉',
+    [Vessel.RCA]: '右冠状动脉',
     [Vessel.D1]: '第一对角支',
     [Vessel.D2]: '第二对角支',
     [Vessel.D3]: '第三对角支',
