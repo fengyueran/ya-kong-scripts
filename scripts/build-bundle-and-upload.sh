@@ -15,7 +15,7 @@ uploadBundleToBayl(){
 }
 
 buildAndUpdate(){
-  yarn buildBundle
+  # yarn buildBundle
   git status
   git add .
   git commit -m "update script"
