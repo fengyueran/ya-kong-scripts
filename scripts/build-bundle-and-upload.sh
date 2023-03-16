@@ -1,7 +1,7 @@
 set -e
 
 baylRepoName=bayl-service
-branch=test
+branch=master
 
 uploadBundleToBayl(){
   cd $baylRepoName
@@ -14,7 +14,7 @@ uploadBundleToBayl(){
 }
 
 buildAndUpdate(){
-  # yarn buildBundle
+  yarn buildBundle
   git status
   git add .
   git commit -m "update script"
