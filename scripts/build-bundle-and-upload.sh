@@ -13,7 +13,7 @@ uploadBundleToBayl(){
   git push origin $branch
 }
 
-buildAndUpdate(){
+buildPushCode(){
   yarn buildBundle
   git status
   git add .
@@ -22,13 +22,14 @@ buildAndUpdate(){
 }
 
 buildAndUpload(){
-  buildAndUpdate
+  buildPushCode
   uploadBundleToBayl
+  echo build and upload success!!!
 }
 
 if [ -d $baylRepoName ]; then
   buildAndUpload
 else
-  git clone -b test git@git.keyayun.com:keyayun/bayl-service.git
+  git clone -b $branch git@git.keyayun.com:keyayun/bayl-service.git
   buildAndUpload
 fi
