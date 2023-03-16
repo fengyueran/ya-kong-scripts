@@ -70,11 +70,11 @@ export interface ReportInfo {
 
 const SourceHanSansSCNormal = path.resolve(
   __filename,
-  '../../assets/fonts/SourceHanSansSC-Normal-Mini.ttf'
+  '../../assets/fonts/SourceHanSansSC-Normal.ttf'
 );
 const SourceHanSansSCMedium = path.resolve(
   __filename,
-  '../../assets/fonts/SourceHanSansSC-Medium-Mini.ttf'
+  '../../assets/fonts/SourceHanSansSC-Medium.ttf'
 );
 
 export const makeReportByTemplate = async (
