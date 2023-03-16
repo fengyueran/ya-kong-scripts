@@ -1,10 +1,9 @@
 set -e
-# yarn buildBundle
+
 baylRepoName=bayl-service
 branch=test
 
 uploadBundleToBayl(){
-  yarn 
   cd $baylRepoName
   git pull
   cp -r ../dist/ third_party/generate_pdf/
@@ -24,7 +23,7 @@ buildAndUpdate(){
 
 buildAndUpload(){
   buildAndUpdate
-  # uploadBundleToBayl
+  uploadBundleToBayl
 }
 
 if [ -d $baylRepoName ]; then
