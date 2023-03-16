@@ -695,10 +695,10 @@ const Header = ({ title }) => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 top: -86,
-                left: 406,
+                left: 356,
             } },
             react_1.default.createElement(renderer_1.Image, { style: { width: 15 }, src: heart_png_1.default }),
-            react_1.default.createElement(renderer_1.Text, { style: { color: '#50A4DA' } }, "\u5FC3\u810F\u5065\u5EB7\u7CBE\u51C6\u68C0\u6D4B\u4E0E\u98CE\u9669\u8BC4\u4F30\u62A5\u544A"))));
+            react_1.default.createElement(renderer_1.Text, { style: { color: '#50A4DA' } }, "\u51A0\u72B6\u52A8\u8109CTA\u7CBE\u51C6\u68C0\u6D4B\u4E0E\u4EBA\u5DE5\u667A\u80FD\u8F85\u52A9\u5206\u6790\u62A5\u544A"))));
 };
 const SphericalImg = ({ detailsLength, resource, sphereImgName }) => {
     if (!sphereImgName)
