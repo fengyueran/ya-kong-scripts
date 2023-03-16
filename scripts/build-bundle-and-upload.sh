@@ -7,23 +7,40 @@ uploadBundleToBayl(){
   cd $baylRepoName
   git pull
   cp -r ../dist/ third_party/generate_pdf/
-  git status
-  git add .
-  git commit -m "update script"
-  git push origin $branch
-}
+  status=`git status -s` 
+  if [ ! $status ]; then  
+    echo "Nothing change"  
+  else  
+    git add .
+    git commit -m "update script"
+    git push origin $branch
+  fi
+  }
 
-buildPushCode(){
-  yarn buildBundle
-  git status
-  git add .
-  git commit -m "update script"
-  git push
+
+
+pushCode(){
+  cd ..
+  status=`git status -s` 
+  if [ ! $status ]; then  
+    echo "Nothing change"  
+  else  
+    git add .
+    git commit -m "update script"
+    git push
+  fi
 }
 
 buildAndUpload(){
-  buildPushCode
+  echo start buildBundle.........................................
+  yarn buildBundle
+
+  echo start uploadBundleToBayl.........................................
   uploadBundleToBayl
+
+  echo start pushCode.........................................
+  pushCode
+
   echo build and upload success!!!
 }
 
