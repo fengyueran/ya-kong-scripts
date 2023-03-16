@@ -10,6 +10,7 @@
     "dev": "ts-node --project ./tsconfig.json example/index.ts",
     "build": "rm -rf lib && tsc -p tsconfig.build.json && cp -r src/assets lib",
     "buildBundle": "rm -rf dist && webpack --mode production && cp -r src/assets dist",
+    "buildBundleAndUpload": "sh scripts/build-bundle-and-upload.sh",
     "prepublishOnly": "yarn build"
   },
   "author": "xhm",
