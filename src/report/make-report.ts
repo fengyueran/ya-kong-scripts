@@ -55,6 +55,11 @@ const makeReportInfo = async (ffrDir: string, lingxiDir: string) => {
 
   const lingxiReportInfo = await readReportInfo(lingxiDir);
   Object.keys(lingxiReportInfo).forEach((key) => {
+    // try {
+
+    // } catch (error) {
+
+    // }
     lingxiReportInfo[key].dvffr = {
       value: getFFRValue(key),
       standard: STANDARD,
