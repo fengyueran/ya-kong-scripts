@@ -55,18 +55,19 @@ const makeReportInfo = async (ffrDir: string, lingxiDir: string) => {
 
   const lingxiReportInfo = await readReportInfo(lingxiDir);
   Object.keys(lingxiReportInfo).forEach((key) => {
-    // try {
-
-    // } catch (error) {
-
-    // }
-    lingxiReportInfo[key].dvffr = {
-      value: getFFRValue(key),
-      standard: STANDARD,
-    };
+    const ffr = getFFRValue(key);
+    if (ffr) {
+      lingxiReportInfo[key].dvffr = {
+        value: ffr,
+        standard: STANDARD,
+      };
+    } else {
+      delete lingxiReportInfo[key];
+    }
   });
   ffrReportInfo.assessmentInfos = lingxiReportInfo;
   ffrReportInfo.sphereImg = 'sphere.png';
+
   return ffrReportInfo;
 };
 
