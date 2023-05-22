@@ -2,7 +2,6 @@ import PDFGenerator from '@cc/pdf-generator';
 import path from 'path';
 
 import { string2base64, streamToBuffer } from '../utils';
-import boaoTemplate from './template';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
@@ -80,10 +79,10 @@ const SourceHanSansSCMedium = path.resolve(
 export const makeReportByTemplate = async (
   reportInfo: ReportInfo,
   getImageData: (name: string) => Promise<Uint8Array>,
-  Template = boaoTemplate.document,
+  template: any,
   language = 'zh'
 ) => {
-  const report = new PDFGenerator(Template, { language });
+  const report = new PDFGenerator(template, { language });
   report.setData(reportInfo);
   report.addFont('SourceHanSansSCNormal', SourceHanSansSCNormal);
   report.addFont('SourceHanSansSCMedium', SourceHanSansSCMedium);

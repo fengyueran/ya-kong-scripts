@@ -1,5 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
+import React from 'react';
+import PdfRender from '@react-pdf/renderer';
 import { PDFDocument } from 'pdf-lib';
 
 import { makeReportByTemplate, ReportInfo } from './make-report-by-template';
@@ -70,6 +72,25 @@ const makeReportInfo = async (ffrDir: string, lingxiDir: string) => {
   return ffrReportInfo;
 };
 
+const makeTemplate = (templateStr: string) => {
+  try {
+    // eslint-disable-next-line
+    const exports = {};
+    // eslint-disable-next-line
+    const require = (file: string) => {
+      if (file === 'react') return React;
+      if (file === '@react-pdf/renderer') return PdfRender;
+      return null;
+    };
+    // eslint-disable-next-line
+    const pdfTemplate = eval(templateStr);
+
+    return pdfTemplate.document || pdfTemplate;
+  } catch (error) {
+    throw new Error(`makeTemplate error:${(error as Error).message}`);
+  }
+};
+
 const makeFFRReport = async (
   ffrDir: string,
   lingxiDir: string,
@@ -83,10 +104,18 @@ const makeFFRReport = async (
     startPage: lingxiReportPageCount,
   };
 
-  const report = await makeReportByTemplate(mergedInfo, async (key) => {
-    const data = await fs.readFile(path.join(ffrDir, key));
-    return new Uint8Array(data);
-  });
+  const templateFile = path.join(lingxiDir, '__template.js');
+  const templateStr = await fs.readFile(templateFile, 'utf-8');
+  const template = makeTemplate(templateStr);
+
+  const report = await makeReportByTemplate(
+    mergedInfo,
+    async (key) => {
+      const data = await fs.readFile(path.join(ffrDir, key));
+      return new Uint8Array(data);
+    },
+    template
+  );
   return report;
 };
 
