@@ -5,16 +5,16 @@ branch=master
 
 uploadBundleToBayl(){
   cd $baylRepoName
-  git pull
-  cp -r ../dist/ third_party/generate_pdf/
-  status=`git status -s` 
-  if [ ! $status ]; then  
-    echo "Nothing change"  
-  else  
-    git add .
-    git commit -m "update script"
-    git push origin $branch
-  fi
+  # git pull
+  cp -r ../dist third_party/generate_pdf
+  # status=`git status -s` 
+  # if [ ! $status ]; then  
+  #   echo "Nothing change"  
+  # else  
+  #   git add .
+  #   git commit -m "update script"
+  #   git push origin $branch
+  # fi
   }
 
 
@@ -33,7 +33,7 @@ pushCode(){
 
 buildAndUpload(){
   echo start buildBundle.........................................
-  yarn buildBundle
+  # yarn buildBundle
 
   echo start uploadBundleToBayl.........................................
   uploadBundleToBayl
