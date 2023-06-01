@@ -21,14 +21,14 @@ const formatTags = (tagInputs: string[]) => {
 
 const test = async () => {
   console.time('Make Report');
-  const [, , basePDF, ffrInfoJSON, outputPDFPath, ...tags] = process.argv;
-  if (basePDF && ffrInfoJSON) {
+  const [, , ffrDir, lingxiDir, outputPDFPath, ...tags] = process.argv;
+  if (ffrDir && lingxiDir) {
     const patientInfo = formatTags(tags);
-    await makeReport(basePDF, ffrInfoJSON, outputPDFPath, patientInfo);
+    await makeReport(ffrDir, lingxiDir, outputPDFPath, patientInfo);
     console.timeEnd('Make Report');
   } else {
     console.log(`
-      usage: yarn dev ffrDir lingxiDir outputPDFPath
+      usage: xx ffrDataDir lingxiDataDir outputPDFPath [...tag]
       `);
   }
 };
