@@ -1,5 +1,5 @@
 {
-  "name": "@cc/report-maker",
+  "name": "to-target-fromat",
   "version": "1.0.0",
   "description": "The lib to make report",
   "main": "lib",
@@ -7,20 +7,17 @@
     "lib"
   ],
   "scripts": {
-    "dev": "ts-node --project ./tsconfig.json example/index.ts",
-    "build": "rm -rf lib && tsc -p tsconfig.build.json && cp -r src/assets lib",
-    "buildBundle": "rm -rf dist && webpack --mode production && cp -r src/assets dist",
-    "buildBundleAndUpload": "sh scripts/build-bundle-and-upload.sh",
-    "prepublishOnly": "yarn build"
+    "dev": "ts-node --project ./tsconfig.json src/index.ts",
+    "build": "rm -rf dist && webpack --mode production"
   },
   "author": "xhm",
   "license": "ISC",
   "dependencies": {
     "@cc/pdf-generator": "^2.1.0",
-    "fs-extra": "^11.1.0",
-    "pdf-lib": "^1.17.1",
-    "react": "^18.2.0",
-    "ts-loader": "^9.4.2"
+    "fs-extra": "^11.1.1",
+    "js-xlsx": "^0.8.22",
+    "ts-loader": "^9.4.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
@@ -29,7 +26,6 @@
     "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^8.26.0",
     "typescript": "^4.8.4",
-    "url-loader": "^4.1.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   }

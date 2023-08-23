@@ -1,18 +1,18 @@
 /* eslint-disable */
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  target: 'node',
-  entry: path.resolve(__dirname, 'example/index.ts'),
+  target: "node",
+  entry: path.resolve(__dirname, "src/index.ts"),
   output: {
-    path: path.resolve(__dirname, 'dist/script'),
-    filename: 'make-report.js',
+    path: path.resolve(__dirname, "scripts"),
+    filename: "format.js",
     library: {
-      type: 'commonjs',
+      type: "commonjs",
     },
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
 
   optimization: {
@@ -23,7 +23,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: {
-          loader: 'ts-loader',
+          loader: "ts-loader",
         },
         exclude: /node_modules/,
       },
@@ -31,9 +31,9 @@ module.exports = {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
-              name: '[name].[ext]',
+              name: "[name].[ext]",
             },
           },
         ],
