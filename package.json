@@ -8,15 +8,18 @@
   ],
   "scripts": {
     "dev": "ts-node --project ./tsconfig.json src/index.ts",
+    "create:fuxaDevicesConfig": "ts-node --project ./tsconfig.json src/fuxa.ts",
     "build": "rm -rf dist && webpack --mode production"
   },
   "author": "xhm",
   "license": "ISC",
   "dependencies": {
     "@cc/pdf-generator": "^2.1.0",
+    "@types/uuid": "^9.0.3",
     "fs-extra": "^11.1.1",
     "js-xlsx": "^0.8.22",
     "ts-loader": "^9.4.2",
+    "uuid": "^9.0.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
