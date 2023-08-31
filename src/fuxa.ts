@@ -6,6 +6,7 @@ const start = async () => {
   const [, , deviceConfigFile] = process.argv;
   const fuxaDeviceConfig: any = await fse.readJson(deviceConfigFile);
 
+  const pubs = [];
   for (let i = 0; i < 1000; i += 1) {
     const key = `t_${v4().slice(0, 8)}-${v4().slice(0, 8)}`;
 
@@ -23,8 +24,14 @@ const start = async () => {
       timestamp: 1693466381950,
       value: null,
     };
+    pubs.push({
+      type: "tag",
+      key: `test${i + 1}`,
+      value: key,
+      name: `${i + 1}`,
+    });
   }
-
+  fuxaDeviceConfig[2].tags["t_8593cc00-924e4309"].options.pubs = pubs;
   await fs.writeFile("output.json", JSON.stringify(fuxaDeviceConfig, null, 2));
 };
 
