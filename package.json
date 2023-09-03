@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "ts-node --project ./tsconfig.json src/index.ts",
     "create:fuxaDevicesConfig": "ts-node --project ./tsconfig.json src/fuxa.ts",
+    "create:fuxaTagsConfig": "ts-node --project ./tsconfig.json src/excel-point-to-fuxa.ts",
     "build": "rm -rf dist && webpack --mode production"
   },
   "author": "xhm",
@@ -18,6 +19,8 @@
     "@types/uuid": "^9.0.3",
     "fs-extra": "^11.1.1",
     "js-xlsx": "^0.8.22",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "ts-loader": "^9.4.2",
     "uuid": "^9.0.0",
     "xlsx": "^0.18.5"

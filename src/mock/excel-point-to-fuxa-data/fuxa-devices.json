@@ -1,0 +1,248 @@
+[
+  {
+    "id": "0",
+    "name": "FUXA Server",
+    "type": "FuxaServer",
+    "property": {},
+    "enabled": true,
+    "tags": {
+      "t_6828abb4-dfd04472": {
+        "id": "t_6828abb4-dfd04472",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "测试设备 Connection Status",
+        "label": "测试设备 Connection Status",
+        "type": "number",
+        "memaddress": "d_0496cb96-4bd044c8",
+        "sysType": 1,
+        "init": "",
+        "timestamp": 1693562907318
+      },
+      "t_88aca4c1-1f084208": {
+        "id": "t_88aca4c1-1f084208",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "ModbusTcp测试设备1 Connection Status",
+        "label": "ModbusTcp测试设备1 Connection Status",
+        "type": "number",
+        "memaddress": "d_dcadf73e-7a2a4841",
+        "sysType": 1,
+        "init": "",
+        "timestamp": 1693564335570,
+        "value": 0
+      },
+      "t_6cbc3d0a-f0214ada": {
+        "id": "t_6cbc3d0a-f0214ada",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "MqttTest Connection Status",
+        "label": "MqttTest Connection Status",
+        "type": "number",
+        "memaddress": "d_fa0de786-527f4998",
+        "sysType": 1,
+        "init": "",
+        "timestamp": 1693562907318
+      },
+      "t_74d79ab8-33b846bd": {
+        "id": "t_74d79ab8-33b846bd",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "MqttTest2 Connection Status",
+        "label": "MqttTest2 Connection Status",
+        "type": "number",
+        "memaddress": "d_0766fe27-396344b8",
+        "sysType": 1,
+        "init": "",
+        "timestamp": 1693564335570,
+        "value": 5
+      }
+    },
+    "polling": 1000
+  },
+  {
+    "id": "d_dcadf73e-7a2a4841",
+    "property": {
+      "address": "192.168.0.26:502",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "1",
+      "baudrate": 9600,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "TcpPort"
+    },
+    "enabled": true,
+    "tags": {
+      "t_4ac6f4d5-f58842d1": {
+        "id": "t_4ac6f4d5-f58842d1",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "测试11",
+        "type": "UInt16",
+        "address": "8",
+        "memaddress": "400000",
+        "value": null,
+        "timestamp": 1693532182341
+      },
+      "t_4ac6f4d5-f58842d0": {
+        "id": "t_4ac6f4d5-f58842d0",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "测试",
+        "type": "Bool",
+        "address": "1",
+        "memaddress": "100000",
+        "value": null,
+        "timestamp": 1693532182341
+      },
+      "t_d53d07e2-8d1647d5": {
+        "id": "t_d53d07e2-8d1647d5",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "变旺",
+        "type": "Int16",
+        "address": "2",
+        "memaddress": "300000",
+        "value": null,
+        "timestamp": 1693532182341
+      },
+      "t_55f9beb6-17e445ac": {
+        "id": "t_55f9beb6-17e445ac",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "ccc",
+        "type": "Int16",
+        "address": "3",
+        "memaddress": "400000",
+        "value": null,
+        "timestamp": 1693532182341
+      }
+    },
+    "name": "ModbusTcp测试设备1",
+    "type": "ModbusTCP",
+    "polling": 1000
+  },
+  {
+    "id": "d_0766fe27-396344b8",
+    "property": {
+      "address": "mqtt://broker.emqx.io:1883",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "baudrate": 9600,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None"
+    },
+    "enabled": true,
+    "tags": {
+      "t_8593cc00-924e4309": {
+        "id": "t_8593cc00-924e4309",
+        "daq": {
+          "enabled": true,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "FUXATEST01",
+        "address": "FUXATEST001",
+        "type": "json",
+        "options": {
+          "pubs": [
+            {
+              "type": "tag",
+              "key": "Test1",
+              "value": "t_4ac6f4d5-f58842d0",
+              "name": "1"
+            },
+            {
+              "type": "tag",
+              "key": "Test2",
+              "value": "t_d53d07e2-8d1647d5",
+              "name": "2"
+            },
+            {
+              "type": "tag",
+              "key": "Test3",
+              "value": "t_55f9beb6-17e445ac",
+              "name": "3"
+            }
+          ]
+        },
+        "timestamp": 1693564335570,
+        "format": null,
+        "scale": null,
+        "value": "{\"Test1\":null,\"Test2\":null,\"Test3\":null}"
+      },
+      "t_68379758-09f9474e": {
+        "id": "t_68379758-09f9474e",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "type": "json",
+        "address": "FUXATEST002",
+        "memaddress": "TT1",
+        "options": {
+          "subs": [
+            "TT1",
+            "TT2"
+          ]
+        },
+        "name": "TT1",
+        "timestamp": 1693466386119,
+        "value": 171
+      },
+      "t_75bfbb27-dde94b73": {
+        "id": "t_75bfbb27-dde94b73",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "type": "json",
+        "address": "FUXATEST002",
+        "memaddress": "TT2",
+        "options": {
+          "subs": [
+            "TT1",
+            "TT2"
+          ]
+        },
+        "name": "TT2",
+        "timestamp": 1693466386119,
+        "value": 161
+      }
+    },
+    "name": "MqttTest2",
+    "type": "MQTTclient",
+    "polling": 1000,
+    "certificatesDir": "/usr/src/app/FUXA/server/_certificates"
+  }
+]
