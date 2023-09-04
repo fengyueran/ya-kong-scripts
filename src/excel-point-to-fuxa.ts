@@ -27,38 +27,63 @@ const readExcel = (xlsxFile, sheetName) => {
 };
 
 const dataTypeMap = {
-  0: "bool",
-  1: "ushort",
-  2: "short",
-  3: "ushort",
-  4: "short",
-  5: "ulong",
-  6: "long",
-  7: "ulong",
-  8: "long",
-  9: "ulong",
-  10: "long",
-  11: "ulong",
-  12: "long",
-  13: "float",
-  14: "float",
-  15: "float",
-  16: "float",
-  17: "double",
-  18: "double",
+  0: "Bool",
+  1: "UInt16LE",
+  2: "Int16LE",
+  3: "UInt16",
+  4: "Int16",
+  5: "UInt32LE",
+  6: "Int32LE",
+  7: "UInt32MLE", //BADC?
+  8: "Int32MLE", //BADC?
+  9: "UInt32MLE", //CDAB?
+  10: "Int32MLE", //CDAB?
+  11: "UInt32",
+  12: "Int32",
+  13: "Float32LE",
+  14: "Float32MLE", //BADC
+  15: "Float32MLE", //CDAB
+  16: "Float32",
+  17: "Float32LE",
+  18: "Float64LE", //GHEFCDAB
 };
 
 const functionCodeMap = {
+  6: "300000",
   4: "300000",
   3: "400000",
   2: "100000",
   1: "000000",
 };
 
+const getBaseTagName = (tagName: string) => {
+  const res = tagName.match(/\D+/);
+  return res[0];
+};
+
+const uniqBy = (arr: any[], key: string) => {
+  const uniqueArr = [];
+  const removed = [];
+  for (let i = 0; i < arr.length; i++) {
+    const found = uniqueArr.find(
+      (v) =>
+        v.name !== arr[i].name &&
+        getBaseTagName(v.name) === getBaseTagName(arr[i].name) &&
+        v[key] === arr[i][key]
+    );
+    if (found) {
+      removed.push(arr[i]);
+    } else {
+      uniqueArr.push(arr[i]);
+    }
+  }
+  return [uniqueArr, removed];
+};
+
 const start = async () => {
   const [, , xlsxFile, sheetName, prefix, deviceConfigFile] = process.argv;
   const rows = readExcel(xlsxFile, sheetName);
-  const newRows = _.uniqBy(rows, "registerNum");
+  const [newRows, removed] = uniqBy(rows, "registerNum");
   const fuxaDeviceConfig: any = await fse.readJson(deviceConfigFile);
 
   newRows.forEach((row) => {
@@ -81,6 +106,7 @@ const start = async () => {
   });
 
   await fs.writeFile("output.json", JSON.stringify(fuxaDeviceConfig, null, 2));
+  console.log("----------------removed", removed);
 };
 
 start();
