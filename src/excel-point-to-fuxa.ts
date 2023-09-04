@@ -1,10 +1,10 @@
 import fs from "fs/promises";
 import fse from "fs-extra";
+import path from "path";
 import { v4 } from "uuid";
 import XLSX from "js-xlsx";
-import * as _ from "lodash";
 
-const readExcel = (xlsxFile, sheetName) => {
+const readExcel = (xlsxFile) => {
   const targetColumnNameItems = [
     { colName: "英文名称", key: "name" },
     { colName: "数据类型", key: "dataType" },
@@ -13,17 +13,26 @@ const readExcel = (xlsxFile, sheetName) => {
     { colName: "位偏移", key: "offset" },
   ];
 
-  const workbook = XLSX.readFile(xlsxFile, {});
-  const worksheet = workbook.Sheets[sheetName];
-  const rows = XLSX.utils.sheet_to_json(worksheet);
-  const newRows = rows.map((row) => {
-    const newRows = {};
-    targetColumnNameItems.forEach(({ colName, key }) => {
-      newRows[key] = row[colName];
+  const workbook = XLSX.readFile(xlsxFile);
+
+  let allRows = [];
+
+  const fileName = path.basename(xlsxFile).split(".")[0];
+  Object.entries(workbook.Sheets).forEach(([key, worksheet]) => {
+    const rows = XLSX.utils.sheet_to_json(worksheet);
+    const newRows = rows.map((row) => {
+      const newRow = {};
+      targetColumnNameItems.forEach(({ colName, key }) => {
+        newRow[key] = row[colName];
+      });
+      return { ...newRow, type: fileName };
     });
-    return newRows;
+    const validRows = newRows.filter((r) => r.name);
+
+    allRows = allRows.concat(validRows);
   });
-  return newRows;
+
+  return allRows;
 };
 
 const dataTypeMap = {
@@ -57,8 +66,13 @@ const functionCodeMap = {
 };
 
 const getBaseTagName = (tagName: string) => {
-  const res = tagName.match(/\D+/);
-  return res[0];
+  try {
+    const res = tagName.match(/\D+/);
+    return res[0];
+  } catch (error) {
+    console.log("tag", tagName);
+    throw 11;
+  }
 };
 
 const uniqBy = (arr: any[], key: string) => {
@@ -80,10 +94,24 @@ const uniqBy = (arr: any[], key: string) => {
   return [uniqueArr, removed];
 };
 
+const readAllExcels = async (sourceDir: string) => {
+  const files = await fse.readdir(sourceDir);
+  const validFiles = files.filter(
+    (f) => f.endsWith(".xlsx") && !f.startsWith(".")
+  );
+
+  const rows = validFiles.reduce((allRows, currentName) => {
+    const rows = readExcel(path.join(sourceDir, currentName));
+    return [...allRows, ...rows];
+  }, []);
+
+  return rows;
+};
+
 const start = async () => {
-  const [, , xlsxFile, sheetName, prefix, deviceConfigFile] = process.argv;
-  const rows = readExcel(xlsxFile, sheetName);
-  const [newRows, removed] = uniqBy(rows, "registerNum");
+  const [, , xlsxFile, prefix, deviceConfigFile] = process.argv;
+  const allRows = await readAllExcels(xlsxFile);
+  const [newRows, removed] = uniqBy(allRows, "registerNum");
   const fuxaDeviceConfig: any = await fse.readJson(deviceConfigFile);
 
   newRows.forEach((row) => {
@@ -96,9 +124,9 @@ const start = async () => {
         changed: true,
         interval: 60,
       },
-      name: `${prefix}_${row.name}`,
+      name: `${prefix}_${row.type}_${row.name}`,
       type: dataTypeMap[row.dataType],
-      address: row.offset,
+      address: Number(row.offset) + 1,
       memaddress: functionCodeMap[row.functionCode],
       timestamp: 1693466381950,
       value: null,
@@ -106,7 +134,7 @@ const start = async () => {
   });
 
   await fs.writeFile("output.json", JSON.stringify(fuxaDeviceConfig, null, 2));
-  console.log("----------------removed", removed);
+  await fs.writeFile("removed.json", JSON.stringify(removed, null, 2));
 };
 
 start();
