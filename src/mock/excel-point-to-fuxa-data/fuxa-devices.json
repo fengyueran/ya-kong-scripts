@@ -19,7 +19,7 @@
         "memaddress": "d_0496cb96-4bd044c8",
         "sysType": 1,
         "init": "",
-        "timestamp": 1693562907318
+        "timestamp": 1693890189989
       },
       "t_88aca4c1-1f084208": {
         "id": "t_88aca4c1-1f084208",
@@ -34,7 +34,7 @@
         "memaddress": "d_dcadf73e-7a2a4841",
         "sysType": 1,
         "init": "",
-        "timestamp": 1693564335570,
+        "timestamp": 1693890492082,
         "value": 0
       },
       "t_6cbc3d0a-f0214ada": {
@@ -50,7 +50,7 @@
         "memaddress": "d_fa0de786-527f4998",
         "sysType": 1,
         "init": "",
-        "timestamp": 1693562907318
+        "timestamp": 1693890189989
       },
       "t_74d79ab8-33b846bd": {
         "id": "t_74d79ab8-33b846bd",
@@ -65,8 +65,207 @@
         "memaddress": "d_0766fe27-396344b8",
         "sysType": 1,
         "init": "",
-        "timestamp": 1693564335570,
+        "timestamp": 1693890492082,
         "value": 5
+      },
+      "t_2ed879a7-2f0e4590": {
+        "id": "t_2ed879a7-2f0e4590",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "503 Connection Status",
+        "label": "503 Connection Status",
+        "type": "number",
+        "memaddress": "d_f2592893-60414aec",
+        "sysType": 1,
+        "value": 5,
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_75d49e83-14e5469f": {
+        "id": "t_75d49e83-14e5469f",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "PLC测试 Connection Status",
+        "label": "PLC测试 Connection Status",
+        "type": "number",
+        "memaddress": "d_89399a72-fc434956",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_23bac817-ccf04910": {
+        "id": "t_23bac817-ccf04910",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "TX3_1",
+        "type": "number",
+        "init": "",
+        "timestamp": 1693890492082,
+        "value": 0
+      },
+      "t_34340567-b9b64f87": {
+        "id": "t_34340567-b9b64f87",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "TX3_2",
+        "type": "number",
+        "init": "",
+        "timestamp": 1693890492082,
+        "value": 1
+      },
+      "t_1fc4931a-f5a9410e": {
+        "id": "t_1fc4931a-f5a9410e",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "TX3_3",
+        "type": "number",
+        "init": "",
+        "timestamp": 1693890492082,
+        "value": 1
+      },
+      "t_e2043d60-1a08470a": {
+        "id": "t_e2043d60-1a08470a",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "ModbusRTU1 Connection Status",
+        "label": "ModbusRTU1 Connection Status",
+        "type": "number",
+        "memaddress": "d_014ff97f-8ce24f71",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_2d87e103-9ae84727": {
+        "id": "t_2d87e103-9ae84727",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "ModbusRTU3 Connection Status",
+        "label": "ModbusRTU3 Connection Status",
+        "type": "number",
+        "memaddress": "d_014ff97f-8ce24f73",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_f504b1b8-354243d4": {
+        "id": "t_f504b1b8-354243d4",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "ModbusRTU2 Connection Status",
+        "label": "ModbusRTU2 Connection Status",
+        "type": "number",
+        "memaddress": "d_014ff97f-8ce24f72",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_41bb06c2-cc514b57": {
+        "id": "t_41bb06c2-cc514b57",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "SJCGQ Connection Status",
+        "label": "SJCGQ Connection Status",
+        "type": "number",
+        "memaddress": "d_2befd94f-24354098",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_5b250fd2-dd824303": {
+        "id": "t_5b250fd2-dd824303",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "SSD Connection Status",
+        "label": "SSD Connection Status",
+        "type": "number",
+        "memaddress": "d_9240a0f7-335746d9",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_5516b003-a7904d33": {
+        "id": "t_5516b003-a7904d33",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "WSDCGQ1 Connection Status",
+        "label": "WSDCGQ1 Connection Status",
+        "type": "number",
+        "memaddress": "d_c539574b-577a4add",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_72deb35e-cfda415b": {
+        "id": "t_72deb35e-cfda415b",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "KT2 Connection Status",
+        "label": "KT2 Connection Status",
+        "type": "number",
+        "memaddress": "d_014ff47f-8ce28f73",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
+      },
+      "t_5036fc5c-ca7d4d54": {
+        "id": "t_5036fc5c-ca7d4d54",
+        "daq": {
+          "enabled": false,
+          "changed": true,
+          "interval": 60
+        },
+        "name": "WSDCGQ2 Connection Status",
+        "label": "WSDCGQ2 Connection Status",
+        "type": "number",
+        "memaddress": "d_c539574b-57784add",
+        "sysType": 1,
+        "value": "",
+        "init": "",
+        "timestamp": 1693890492082
       }
     },
     "polling": 1000
@@ -85,164 +284,170 @@
       "parity": "None",
       "connectionOption": "TcpPort"
     },
-    "enabled": true,
-    "tags": {
-      "t_4ac6f4d5-f58842d1": {
-        "id": "t_4ac6f4d5-f58842d1",
-        "daq": {
-          "enabled": false,
-          "changed": true,
-          "interval": 60
-        },
-        "name": "测试11",
-        "type": "UInt16",
-        "address": "8",
-        "memaddress": "400000",
-        "value": null,
-        "timestamp": 1693532182341
-      },
-      "t_4ac6f4d5-f58842d0": {
-        "id": "t_4ac6f4d5-f58842d0",
-        "daq": {
-          "enabled": false,
-          "changed": true,
-          "interval": 60
-        },
-        "name": "测试",
-        "type": "Bool",
-        "address": "1",
-        "memaddress": "100000",
-        "value": null,
-        "timestamp": 1693532182341
-      },
-      "t_d53d07e2-8d1647d5": {
-        "id": "t_d53d07e2-8d1647d5",
-        "daq": {
-          "enabled": false,
-          "changed": true,
-          "interval": 60
-        },
-        "name": "变旺",
-        "type": "Int16",
-        "address": "2",
-        "memaddress": "300000",
-        "value": null,
-        "timestamp": 1693532182341
-      },
-      "t_55f9beb6-17e445ac": {
-        "id": "t_55f9beb6-17e445ac",
-        "daq": {
-          "enabled": false,
-          "changed": true,
-          "interval": 60
-        },
-        "name": "ccc",
-        "type": "Int16",
-        "address": "3",
-        "memaddress": "400000",
-        "value": null,
-        "timestamp": 1693532182341
-      }
-    },
-    "name": "ModbusTcp测试设备1",
+    "enabled": false,
+    "tags": {},
+    "name": "PCS",
     "type": "ModbusTCP",
     "polling": 1000
   },
   {
-    "id": "d_0766fe27-396344b8",
+    "id": "d_014ff97f-8ce24f71",
     "property": {
-      "address": "mqtt://broker.emqx.io:1883",
+      "address": "com1",
       "port": null,
       "slot": null,
       "rack": null,
+      "slaveid": "1",
+      "baudrate": 115200,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "SerialPort"
+    },
+    "enabled": false,
+    "tags": {},
+    "name": "IOMK",
+    "type": "ModbusRTU",
+    "polling": 2000
+  },
+  {
+    "id": "d_014ff97f-8ce24f73",
+    "property": {
+      "address": "com3",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "1",
+      "baudrate": 115200,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "SerialPort"
+    },
+    "enabled": false,
+    "tags": {},
+    "name": "KT1",
+    "type": "ModbusRTU",
+    "polling": 2000
+  },
+  {
+    "id": "d_014ff97f-8ce24f72",
+    "property": {
+      "address": "com2",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "1",
+      "baudrate": 115200,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "SerialPort"
+    },
+    "enabled": false,
+    "tags": {},
+    "name": "BMS",
+    "type": "ModbusRTU",
+    "polling": 2000
+  },
+  {
+    "id": "d_2befd94f-24354098",
+    "property": {
+      "address": "com3",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "5",
       "baudrate": 9600,
       "databits": 8,
       "stopbits": 1,
-      "parity": "None"
+      "parity": "None",
+      "connectionOption": "SerialPort"
     },
-    "enabled": true,
-    "tags": {
-      "t_8593cc00-924e4309": {
-        "id": "t_8593cc00-924e4309",
-        "daq": {
-          "enabled": true,
-          "changed": true,
-          "interval": 60
-        },
-        "name": "FUXATEST01",
-        "address": "FUXATEST001",
-        "type": "json",
-        "options": {
-          "pubs": [
-            {
-              "type": "tag",
-              "key": "Test1",
-              "value": "t_4ac6f4d5-f58842d0",
-              "name": "1"
-            },
-            {
-              "type": "tag",
-              "key": "Test2",
-              "value": "t_d53d07e2-8d1647d5",
-              "name": "2"
-            },
-            {
-              "type": "tag",
-              "key": "Test3",
-              "value": "t_55f9beb6-17e445ac",
-              "name": "3"
-            }
-          ]
-        },
-        "timestamp": 1693564335570,
-        "format": null,
-        "scale": null,
-        "value": "{\"Test1\":null,\"Test2\":null,\"Test3\":null}"
-      },
-      "t_68379758-09f9474e": {
-        "id": "t_68379758-09f9474e",
-        "daq": {
-          "enabled": false,
-          "changed": true,
-          "interval": 60
-        },
-        "type": "json",
-        "address": "FUXATEST002",
-        "memaddress": "TT1",
-        "options": {
-          "subs": [
-            "TT1",
-            "TT2"
-          ]
-        },
-        "name": "TT1",
-        "timestamp": 1693466386119,
-        "value": 171
-      },
-      "t_75bfbb27-dde94b73": {
-        "id": "t_75bfbb27-dde94b73",
-        "daq": {
-          "enabled": false,
-          "changed": true,
-          "interval": 60
-        },
-        "type": "json",
-        "address": "FUXATEST002",
-        "memaddress": "TT2",
-        "options": {
-          "subs": [
-            "TT1",
-            "TT2"
-          ]
-        },
-        "name": "TT2",
-        "timestamp": 1693466386119,
-        "value": 161
-      }
+    "enabled": false,
+    "tags": {},
+    "name": "SJCGQ",
+    "type": "ModbusRTU",
+    "polling": 1000
+  },
+  {
+    "id": "d_9240a0f7-335746d9",
+    "property": {
+      "address": "com3",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "6",
+      "baudrate": 9600,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "SerialPort"
     },
-    "name": "MqttTest2",
-    "type": "MQTTclient",
-    "polling": 1000,
-    "certificatesDir": "/usr/src/app/FUXA/server/_certificates"
+    "enabled": false,
+    "tags": {},
+    "name": "SSD",
+    "type": "ModbusRTU",
+    "polling": 1000
+  },
+  {
+    "id": "d_c539574b-577a4add",
+    "property": {
+      "address": "com3",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "3",
+      "baudrate": 9600,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "SerialPort"
+    },
+    "enabled": false,
+    "tags": {},
+    "name": "WSDCGQ1",
+    "type": "ModbusRTU",
+    "polling": 1000
+  },
+  {
+    "id": "d_014ff47f-8ce28f73",
+    "property": {
+      "address": "com3",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "2",
+      "baudrate": 115200,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "SerialPort"
+    },
+    "enabled": false,
+    "tags": {},
+    "name": "KT2",
+    "type": "ModbusRTU",
+    "polling": 2000
+  },
+  {
+    "id": "d_c539574b-57784add",
+    "property": {
+      "address": "com3",
+      "port": null,
+      "slot": null,
+      "rack": null,
+      "slaveid": "4",
+      "baudrate": 9600,
+      "databits": 8,
+      "stopbits": 1,
+      "parity": "None",
+      "connectionOption": "SerialPort"
+    },
+    "enabled": false,
+    "tags": {},
+    "name": "WSDCGQ2",
+    "type": "ModbusRTU",
+    "polling": 1000
   }
 ]
