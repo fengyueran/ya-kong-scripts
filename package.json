@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "dev": "ts-node --project ./tsconfig.json src/index.ts",
-    "create:fuxaDevicesConfig": "ts-node --project ./tsconfig.json src/fuxa.ts",
-    "create:fuxaTagsConfig": "ts-node --project ./tsconfig.json src/excel-point-to-fuxa.ts",
+    "create:fuxaTagsConfig": "ts-node --project ./tsconfig.json src/fuxa.ts",
+    "create:fuxaDevicesConfig": "ts-node --project ./tsconfig.json src/excel-to-fuxa-config.ts",
     "build": "rm -rf dist && webpack --mode production"
   },
   "author": "xhm",

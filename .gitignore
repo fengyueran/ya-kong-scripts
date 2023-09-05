@@ -24,4 +24,4 @@ yarn-error.log*
 
 lib
 dist
-bayl-service
+output
