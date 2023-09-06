@@ -47,19 +47,19 @@ const readExcel = (xlsxFile) => {
 
 const DataTypeMap = {
   0: "Bool",
-  1: "UInt16LE",
-  2: "Int16LE",
-  3: "UInt16",
-  4: "Int16",
-  5: "UInt32LE",
+  1: "UInt16",
+  2: "Int16",
+  3: "UInt16LE",
+  4: "Int16LE",
+  5: "Int32",
   6: "Int32LE",
   7: "UInt32MLE", //BADC?
   8: "Int32MLE", //BADC?
   9: "UInt32MLE", //CDAB?
   10: "Int32MLE", //CDAB?
   11: "UInt32",
-  12: "Int32",
-  13: "Float32LE",
+  12: "Int32LE",
+  13: "Float32",
   14: "Float32MLE", //BADC
   15: "Float32MLE", //CDAB
   16: "Float32",
