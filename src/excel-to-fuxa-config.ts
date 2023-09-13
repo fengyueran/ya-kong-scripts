@@ -12,6 +12,7 @@ interface ExcelRow {
   functionCode: string;
   equipment: string;
   sheetName: string;
+  ratio: string;
 }
 
 const readExcel = (xlsxFile) => {
@@ -21,6 +22,7 @@ const readExcel = (xlsxFile) => {
     { colName: "功能码", key: "functionCode" },
     { colName: "寄存器号", key: "registerNum" },
     { colName: "位偏移", key: "offset" },
+    { colName: "系数", key: "ratio" },
   ];
 
   const workbook = XLSX.readFile(xlsxFile);
@@ -29,17 +31,19 @@ const readExcel = (xlsxFile) => {
 
   const fileName = path.basename(xlsxFile).split(".")[0];
   Object.entries(workbook.Sheets).forEach(([sheetName, worksheet]) => {
-    const rows = XLSX.utils.sheet_to_json(worksheet);
-    const newRows = rows.map((row) => {
-      const newRow = {};
-      targetColumnNameItems.forEach(({ colName, key }) => {
-        newRow[key] = row[colName];
+    if (sheetName === "AI" || sheetName === "DI") {
+      const rows = XLSX.utils.sheet_to_json(worksheet);
+      const newRows = rows.map((row) => {
+        const newRow = {};
+        targetColumnNameItems.forEach(({ colName, key }) => {
+          newRow[key] = row[colName];
+        });
+        return { ...newRow, equipment: fileName, sheetName };
       });
-      return { ...newRow, equipment: fileName, sheetName };
-    });
-    const validRows = newRows.filter((r) => r.name);
+      const validRows = newRows.filter((r) => r.name);
 
-    allRows = allRows.concat(validRows);
+      allRows = allRows.concat(validRows);
+    }
   });
 
   return allRows;
@@ -51,21 +55,20 @@ const DataTypeMap = {
   2: "Int16",
   3: "UInt16LE",
   4: "Int16LE",
-  5: "Int32",
-  6: "Int32LE",
-  7: "UInt32MLE", //BADC?
-  8: "Int32MLE", //BADC?
-  9: "UInt32MLE", //CDAB?
-  10: "Int32MLE", //CDAB?
-  11: "UInt32",
+  5: "UInt32",
+  6: "Int32",
+  7: "UInt32MLE",
+  8: "Int32MLE",
+  9: "UInt32MLE",
+  10: "Int32MLE",
+  11: "UInt32LE",
   12: "Int32LE",
   13: "Float32",
-  14: "Float32MLE", //BADC
-  15: "Float32MLE", //CDAB
-  16: "Float32",
-  17: "Float32LE",
-  18: "Float64LE", //GHEFCDAB
-  Bit: "Bit",
+  14: "Float32MLE",
+  15: "Float32MLE",
+  16: "Float32LE",
+  17: "Float64",
+  18: "Float64LE",
 };
 
 const FunctionCodeMap = {
@@ -106,15 +109,34 @@ const getAllXlsxFiles = async (sourceDir: string) => {
   return validFiles;
 };
 
+const getDataType = (customDataType: string, functionCode: string) => {
+  if (customDataType === "0") {
+    return functionCode === "1" || functionCode === "2"
+      ? DataTypeMap[0]
+      : DataTypeMap[2];
+  }
+  return DataTypeMap[customDataType];
+};
+
 const makeTagInfo = (
   tagBaseInfo: {
     id: string;
+    slaveID: string;
     prefix: string;
   } & ExcelRow
 ) => {
-  const { id, equipment, name, dataType, registerNum, functionCode, prefix } =
-    tagBaseInfo;
-  return {
+  const {
+    id,
+    slaveID,
+    equipment,
+    name,
+    dataType,
+    registerNum,
+    functionCode,
+    prefix,
+    ratio,
+  } = tagBaseInfo;
+  const tagInfo = {
     id,
     daq: {
       enabled: false,
@@ -122,19 +144,24 @@ const makeTagInfo = (
       interval: 60,
     },
     name: `${prefix}_${equipment}_${name}`,
-    type: DataTypeMap[dataType],
+    type: getDataType(dataType, functionCode),
     address: Number(registerNum) + 1,
+    slaveID,
     memaddress: FunctionCodeMap[functionCode],
     timestamp: Date.now(),
     value: null,
   };
+  if (ratio) {
+    (tagInfo as any).divisor = (1 / Number(ratio)).toString();
+  }
+  return tagInfo;
 };
 
-const makeTags = (prefix: string, excelRows: ExcelRow[]) => {
+const makeTags = (prefix: string, slaveID: string, excelRows: ExcelRow[]) => {
   const tags = {};
   excelRows.forEach((row) => {
     const tagID = `t_${v4().slice(0, 8)}-${v4().slice(0, 8)}`;
-    tags[tagID] = makeTagInfo({ id: tagID, prefix, ...row });
+    tags[tagID] = makeTagInfo({ id: tagID, slaveID, prefix, ...row });
   });
   return tags;
 };
@@ -162,7 +189,11 @@ const start = async () => {
     const deviceConfig = fuxaDeviceConfig.find(({ name }) =>
       fileName.startsWith(name)
     );
-    deviceConfig.tags = makeTags(prefix, uniqueRows);
+    deviceConfig.tags = makeTags(
+      prefix,
+      deviceConfig.property.slaveid,
+      uniqueRows
+    );
 
     return [...pre, ...repeatedRows];
   }, []);
