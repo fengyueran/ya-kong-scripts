@@ -13,10 +13,12 @@ interface ExcelRow {
   equipment: string;
   sheetName: string;
   ratio: string;
+  tagName: string;
 }
 
 const readExcel = (xlsxFile) => {
   const targetColumnNameItems = [
+    { colName: "点位名", key: "tagName" },
     { colName: "英文名称", key: "name" },
     { colName: "数据类型", key: "dataType" },
     { colName: "功能码", key: "functionCode" },
@@ -28,10 +30,11 @@ const readExcel = (xlsxFile) => {
   const workbook = XLSX.readFile(xlsxFile);
 
   let allRows = [];
+  let allInterVarRows = [];
 
   const fileName = path.basename(xlsxFile).split(".")[0];
   Object.entries(workbook.Sheets).forEach(([sheetName, worksheet]) => {
-    if (sheetName === "AI" || sheetName === "DI") {
+    if (sheetName === "AI" || sheetName === "DI" || sheetName === "内存变量") {
       const rows = XLSX.utils.sheet_to_json(worksheet);
       const newRows = rows.map((row) => {
         const newRow = {};
@@ -42,11 +45,15 @@ const readExcel = (xlsxFile) => {
       });
       const validRows = newRows.filter((r) => r.name);
 
-      allRows = allRows.concat(validRows);
+      if (sheetName === "内存变量") {
+        allInterVarRows = allInterVarRows.concat(validRows);
+      } else {
+        allRows = allRows.concat(validRows);
+      }
     }
   });
 
-  return allRows;
+  return [allRows, allInterVarRows];
 };
 
 const DataTypeMap = {
@@ -166,6 +173,35 @@ const makeTags = (prefix: string, slaveID: string, excelRows: ExcelRow[]) => {
   return tags;
 };
 
+const makeInterTagInfo = (
+  tagBaseInfo: {
+    id: string;
+  } & ExcelRow
+) => {
+  const { id, name, tagName } = tagBaseInfo;
+  const tagInfo = {
+    id,
+    daq: {
+      enabled: false,
+      changed: true,
+      interval: 60,
+    },
+    name: `${tagName}_${name}`,
+    type: "boolean",
+  };
+
+  return tagInfo;
+};
+
+const makeInterTags = (excelRows: ExcelRow[]) => {
+  const tags = {};
+  excelRows.forEach((row) => {
+    const tagID = `t_${v4().slice(0, 8)}-${v4().slice(0, 8)}`;
+    tags[tagID] = makeInterTagInfo({ id: tagID, ...row });
+  });
+  return tags;
+};
+
 const start = async () => {
   console.log("******************Start************************");
   const [, , ...parameters] = process.argv;
@@ -183,8 +219,10 @@ const start = async () => {
   const fuxaDeviceConfig = await fse.readJson(deviceConfigFile);
 
   const allRepeatedRows = xlsxFiles.reduce((pre, fileName) => {
-    const rowInfos = readExcel(path.join(inputDir, fileName));
-    const [uniqueRows, repeatedRows] = uniqBy(rowInfos, "registerNum");
+    const [pointsRowInfos, interTagRows] = readExcel(
+      path.join(inputDir, fileName)
+    );
+    const [uniqueRows, repeatedRows] = uniqBy(pointsRowInfos, "registerNum");
 
     const deviceConfig = fuxaDeviceConfig.find(({ name }) =>
       fileName.startsWith(name)
@@ -194,6 +232,15 @@ const start = async () => {
       deviceConfig.property.slaveid,
       uniqueRows
     );
+
+    const fuxaServerConfig = fuxaDeviceConfig.find(
+      ({ name }) => name === "FUXA Server"
+    );
+
+    fuxaServerConfig.tags = {
+      ...fuxaServerConfig.tags,
+      ...makeInterTags(interTagRows),
+    };
 
     return [...pre, ...repeatedRows];
   }, []);
