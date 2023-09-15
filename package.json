@@ -10,6 +10,7 @@
     "dev": "ts-node --project ./tsconfig.json src/index.ts",
     "create:fuxaTagsConfig": "ts-node --project ./tsconfig.json src/fuxa.ts",
     "create:fuxaDevicesConfig": "ts-node --project ./tsconfig.json src/excel-to-fuxa-config.ts",
+    "test": "ts-node --project ./tsconfig.json src/make-script.ts",
     "build": "rm -rf dist && webpack --mode production"
   },
   "author": "xhm",
