@@ -202,6 +202,17 @@ const makeInterTags = (excelRows: ExcelRow[]) => {
   return tags;
 };
 
+const makeInterTagMap = (prefix: string,interTags: any[])=> {
+  const tagMap = {};
+  interTags.forEach((tag)=> {
+    const tagName  = `${prefix}_${tag.equipment}_${tag.tagName}`;
+    const group = tagMap[tagName] || [];
+    group.push(`${tag.tagName}_${tag.name}`);
+    tagMap[tagName] =group;
+  })
+  return tagMap;
+}
+
 const start = async () => {
   console.log("******************Start************************");
   const [, , ...parameters] = process.argv;
@@ -217,7 +228,7 @@ const start = async () => {
   const xlsxFiles = await getAllXlsxFiles(inputDir);
 
   const fuxaDeviceConfig = await fse.readJson(deviceConfigFile);
-
+  let interTagMap = {};
   const allRepeatedRows = xlsxFiles.reduce((pre, fileName) => {
     const [pointsRowInfos, interTagRows] = readExcel(
       path.join(inputDir, fileName)
@@ -242,6 +253,8 @@ const start = async () => {
       ...makeInterTags(interTagRows),
     };
 
+    interTagMap = { ...interTagMap, ...makeInterTagMap(prefix, interTagRows)}
+
     return [...pre, ...repeatedRows];
   }, []);
 
@@ -252,6 +265,11 @@ const start = async () => {
   await fs.writeFile(
     "output/tag-removed.json",
     JSON.stringify(allRepeatedRows, null, 2)
+  );
+
+  await fs.writeFile(
+    "output/inter-tag.json",
+    JSON.stringify(interTagMap, null, 2)
   );
   console.log(
     "******************congratulations, generate fuxa devices config success!!!************************"
